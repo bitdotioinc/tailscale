@@ -316,7 +316,7 @@ func (p *proxy) serve(sessionID int64, c net.Conn) error {
 		errc <- err
 	}()
 	go func() {
-		_, err := io.Copy(clientConn, uptc)
+		_, err := io.Copy(clientConn, uptc, make([]byte, 8 * 1024))
 		errc <- err
 	}()
 	if err := <-errc; err != nil {
